@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Function:
+    Timeout: 30
+
+Parameters:
+  SecurityGroupId:
+    Description: Security Group for the application
+    Type: String
+  Subnet1Id:
+    Description: Subnet Id for the first subnet
+    Type: String
+  Subnet2Id:
+    Description: Subnet Id for the second subnet
+    Type: String
+  DatabaseSecretName:
+    Description: The name of the secret holding database credentials
+    Type: String
+  DatabaseEndpoint:
+    Description: The endpoint of the database
+    Type: String
+
+Resources:
+  ProductApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: com.app.slidee.LambdaHandler::handleRequest
+      Runtime: java21
+      MemorySize: 2048
+      Architectures:
+        - x86_64
+      Timeout: 30
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+        RootApiEvent:
+          Type: Api
+          Properties:
+            Path: /
+            Method: ANY
