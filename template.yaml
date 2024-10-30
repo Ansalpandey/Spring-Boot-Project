@@ -27,7 +27,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: .
-      Handler: com.app.slidee.LambdaHandler::handleRequest
+      Handler: com.app.springApp.LambdaHandler::handleRequest
       Runtime: java21
       MemorySize: 2048
       Architectures:
